@@ -19,12 +19,12 @@ class CustomerIO extends CComponent
     }
 
     /**
-     * Register a log-in in Customer.io
+     * Creates a customer in Customer.io
      * @param  mixed $customer_id You'll want to set this dynamically to the unique id of the user associated with the event
-     * @param  array $event_data Event's data
+     * @param  array $attributes Extra customer info
      * @return void
      */
-    public function registerLogin($customer_id, $event_data)
+    public function createCustomer($customer_id, $attributes)
     {
         $session = curl_init();
         $customerio_url = 'https://track.customer.io/api/v1/customers/';
@@ -36,7 +36,7 @@ class CustomerIO extends CComponent
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($session, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($session, CURLOPT_VERBOSE, 1);
-        curl_setopt($session, CURLOPT_POSTFIELDS,http_build_query($event_data));
+        curl_setopt($session, CURLOPT_POSTFIELDS,http_build_query($attributes));
 
         curl_setopt($session,CURLOPT_USERPWD,$this->siteId . ":" . $this->apiKey);
 
@@ -50,7 +50,7 @@ class CustomerIO extends CComponent
      * Register an event in Customer.io
      * @param  mixed $customer_id You'll want to set this dynamically to the unique id of the user associated with the event
      * @param  string $name Event's name
-     * @param  array $event_data Event's data
+     * @param  array $event_data Event data
      * @return void
      */
     public function trackEvent($customer_id, $name, $event_data = [])
