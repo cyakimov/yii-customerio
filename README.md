@@ -1,4 +1,4 @@
-Yii Customer.io component
+Yii PHP component for Customer.io
 ==============
 
 Setup
